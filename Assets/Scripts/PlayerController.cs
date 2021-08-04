@@ -6,6 +6,8 @@ public class PlayerController : MonoBehaviour
 {
     /// <summary>Sets player's speed</summary>
     public float speed = 5.0f;
+    ///<summary>Set's Players health (default of 5)</summary>
+    public int health = 5;
     private CharacterController controller;
     private int score = 0;
 
@@ -22,7 +24,7 @@ public class PlayerController : MonoBehaviour
         controller.Move(move * Time.deltaTime * speed);
     }
 
-    ///<summary>Inriments score when Player touches object called Pickup</summary>
+    ///<summary>Inriments score when Player touches object called "Pickup," decriments health when player touches object tagged "Trap"</summary>
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag=="Pickup")
@@ -30,6 +32,12 @@ public class PlayerController : MonoBehaviour
             score += 1;
             Debug.Log($"Score: {score}");
             Destroy(other.gameObject);
+        }
+
+        if (other.gameObject.tag=="Trap")
+        {
+            health -= 1;
+            Debug.Log($"Health: {health}");
         }
     }
 
