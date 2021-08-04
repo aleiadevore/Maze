@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -20,6 +21,12 @@ public class PlayerController : MonoBehaviour
     ///<summary>Moves game object when keys WASD or arrow keys are pressed</summary>
     void Update()
     {
+        // Checking health before moving
+        if (health == 0)
+        {
+            Debug.Log("Game Over!");
+            SceneManager.LoadScene("maze");
+        }
         Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
         controller.Move(move * Time.deltaTime * speed);
     }
