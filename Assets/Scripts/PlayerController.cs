@@ -9,13 +9,23 @@ public class PlayerController : MonoBehaviour
     public float speed = 10.0f;
     ///<summary>Set's Players health (default of 5)</summary>
     public int health = 5;
-    private CharacterController controller;
+    //private CharacterController controller;
+    private Rigidbody rb;
     private int score = 0;
 
     ///<summary>Adds an instance of CharacterController to Player at start</summary>
     void Start()
     {
-        controller = gameObject.AddComponent<CharacterController>();
+        //controller = gameObject.AddComponent<CharacterController>();
+        rb = GetComponent<Rigidbody>();
+    }
+
+    /// <summary>handles controller movement</summary>
+    void FixedUpdate()
+    {
+        //Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+        //controller.Move(move * Time.deltaTime * speed);
+        rb.velocity = new Vector3(Input.GetAxis("Horizontal") * speed, rb.velocity.y, Input.GetAxis("Vertical") * speed);
     }
 
     ///<summary>Moves game object when keys WASD or arrow keys are pressed</summary>
@@ -27,8 +37,6 @@ public class PlayerController : MonoBehaviour
             Debug.Log("Game Over!");
             SceneManager.LoadScene("maze");
         }
-        Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-        controller.Move(move * Time.deltaTime * speed);
     }
 
     ///<summary>Inriments score when Player touches object called "Pickup," decriments health when player touches object tagged "Trap." Handles win.</summary>
@@ -41,9 +49,9 @@ public class PlayerController : MonoBehaviour
             Destroy(other.gameObject);
         }
 
-        if (other.gameObject.tag=="Trap")
+        if (other.tag=="Trap")
         {
-            health -= 1;
+            health--;
             Debug.Log($"Health: {health}");
         }
 
@@ -56,6 +64,6 @@ public class PlayerController : MonoBehaviour
     /// <summary>Destroys controller on disable</summary>
     public void OnDisable()
     {
-        Destroy(controller);
+        //Destroy(controller);
     }
 }

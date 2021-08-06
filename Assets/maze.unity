@@ -7228,7 +7228,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9ae35700670448288ac2bfa1006682e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3
+  speed: 10
   health: 5
 --- !u!1 &2032041603 stripped
 GameObject:
